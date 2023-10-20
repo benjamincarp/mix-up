@@ -1,10 +1,6 @@
 import { createClient } from 'contentful'
-// const { CONTENTFUL_SPACE_ID, CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_PREVIEW_ACCESS_TOKEN } = process.env
-const CONTENTFUL_SPACE_ID = 'ff4m1egimr2c';
-const CONTENTFUL_ACCESS_TOKEN = 'wXeqnxscFAAw1i9jYED264zTUel8ImOS7bA1VJti7K8';
-const CONTENTFUL_PREVIEW_ACCESS_TOKEN = '8-n53Eevy76KxWcjBLoYnZX_jl5U1S1D5X1ZjM3P8GU';
 
-console.log(`space = ${CONTENTFUL_SPACE_ID}`);
+const { CONTENTFUL_SPACE_ID, CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_PREVIEW_ACCESS_TOKEN } = process.env
 
 // This is the standard Contentful client. It fetches
 // content that has been published.
