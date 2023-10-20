@@ -1,10 +1,13 @@
 import type { Entry, EntryFields } from "contentful";
 
 export interface TypeRecipeFields {
-    name?: EntryFields.Symbol;
-    ingredient: EntryFields.Symbol[];
-    instructions?: EntryFields.RichText;
-    tags?: EntryFields.Symbol[];
+    contentTypeId: "recipe",
+    fields:{
+        name?: EntryFields.Symbol;
+        ingredient: EntryFields.Symbol[];
+        instructions?: EntryFields.RichText;
+        tags?: EntryFields.Symbol[];
+    }
 }
 
 export type TypeRecipe = Entry<TypeRecipeFields>;

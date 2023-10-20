@@ -16,7 +16,7 @@ import { fetchRecipes } from '../contentful/recipes'
             const slug = recipe.sys.id;
             return (
               <li key={slug}>
-                <Link href={`/${slug}`}>{recipe.fields.nametitle?.toString() || ''}</Link>
+                <Link href={`/${slug}`}>{recipe.fields.name?.toString() || ''}</Link>
               </li>
             )
           })}

@@ -1,4 +1,4 @@
-import { TypeRecipe } from './types'
+import { TypeRecipeFields } from './types'
 import { Entry } from 'contentful'
 import { Document as RichTextDocument } from '@contentful/rich-text-types'
 import contentfulClient from './contentfulClient'
@@ -12,7 +12,7 @@ interface FetchRecipesOptions {
 export async function fetchRecipes({ preview }: FetchRecipesOptions): Promise<Entry[]> {
 	const contentful = contentfulClient({ preview })
 
-	const blogPostsResult = await contentful.getEntries<TypeRecipe>({
+	const blogPostsResult = await contentful.getEntries<TypeRecipeFields>({
 		content_type: 'recipe'
 	})
 
