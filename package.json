@@ -6,14 +6,17 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "types:contentful": "export $(cat .env.local | awk '!/^\\s*#/' | awk '!/^\\s*$/'); cf-content-types-generator --spaceId $CONTENTFUL_SPACE_ID --token $CONTENTFUL_MANAGEMENT_TOKEN -o contentful/types"
   },
   "dependencies": {
+    "contentful": "^10.6.4",
+    "next": "13.5.5",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "13.5.5"
+    "react-dom": "^18"
   },
   "devDependencies": {
+    "cf-content-types-generator": "^2.12.9",
     "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
