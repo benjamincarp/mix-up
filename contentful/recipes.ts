@@ -19,20 +19,20 @@ export async function fetchRecipes({ preview }: FetchRecipesOptions): Promise<En
 	return blogPostsResult.items;
 }
 
-// A function to fetch a single blog post by its slug.
+// A function to fetch a single cocktail by its slug.
 // Optionally uses the Contentful content preview.
-// interface FetchBlogPostOptions {
-// 	slug: string
-// 	preview: boolean
-// }
-// export async function fetchBlogPost({ slug, preview }: FetchBlogPostOptions): Promise<BlogPost | null> {
-// 	const contentful = contentfulClient({ preview })
+interface FetchSingleRecipeOptions {
+	slug: string
+	preview: boolean
+}
+export async function fetchSingleRecipe({ slug, preview }: FetchSingleRecipeOptions): Promise<Entry | null> {
+	const contentful = contentfulClient({ preview })
 
-// 	const blogPostsResult = await contentful.getEntries<Any>({
-// 		content_type: 'blogPost',
-// 		'fields.slug': slug,
-// 		include: 2,
-// 	})
+	const recipesResult = await contentful.getEntries<TypeRecipeFields>({
+		content_type: 'recipe',
+		'sys.id': slug,
+		include: 2,
+	})
 
-// 	return parseContentfulBlogPost(blogPostsResult.items[0])
-// }
+	return recipesResult.items[0];
+}
