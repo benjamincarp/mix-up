@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Link from 'next/link'
 import { draftMode } from 'next/headers'
 import { fetchRecipes } from '../contentful/recipes'
 
@@ -7,10 +7,20 @@ import { fetchRecipes } from '../contentful/recipes'
 
     console.log(recipeList);
     return (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <main className="items-center justify-between p-24">
         <h1>
           MixUp
         </h1>
+        <ul>
+          {recipeList.map((recipe) => {
+            const slug = recipe.sys.id;
+            return (
+              <li key={slug}>
+                <Link href={`/${slug}`}>{recipe.fields.name}</Link>
+              </li>
+            )
+          })}
+        </ul>
       </main>  
     )
   }
