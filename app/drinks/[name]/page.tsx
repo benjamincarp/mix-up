@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: RecipePageProps, parent: Reso
 	}
 
 	return {
-		title: `Mixing a ${recipe.fields.name?.toString()}`,
+		title: `Mixing a ${recipe.name?.toString()}`,
 	}
 }
 
@@ -44,7 +44,14 @@ async function RecipePage({ params }: RecipePageProps) {
 
 	return (
 		<main className="p-[6vw]">
-			{recipe.fields.name?.toString()}
+			<h1>
+				{recipe.name?.toString()}
+			</h1>
+			<ul>
+				{recipe.ingredients.map((ingredient,i) => {
+					return (<li key={i}>{ingredient}</li>)
+				})}
+			</ul>
 		</main>
 	)
 }
