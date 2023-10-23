@@ -12,10 +12,10 @@ import { fetchRecipes } from '../contentful/recipes'
         </h1>
         <ul>
           {recipeList.map((recipe) => {
-            const slug = recipe.sys.id;
+            const name = recipe.fields.name?.toString();
             return (
-              <li key={slug}>
-                <Link href={`/${slug}`}>{recipe.fields.name?.toString() || ''}</Link>
+              <li key={name}>
+                <Link href={`drinks/${name}`}>{name}</Link>
               </li>
             )
           })}

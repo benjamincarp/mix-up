@@ -1,12 +1,12 @@
 import type { Entry, EntryFields } from "contentful";
 
 export interface TypeRecipeFields {
-    contentTypeId:'recipe',
+    contentTypeId: 'recipe',
     fields: {
-        name?: EntryFields.Symbol;
-        ingredient: EntryFields.Symbol[];
+        name: EntryFields.Text;
+        ingredients: EntryFields.Text[];
         instructions?: EntryFields.RichText;
-        tags?: EntryFields.Symbol[];
+        tags?: EntryFields.Text[];
     }
 }
 

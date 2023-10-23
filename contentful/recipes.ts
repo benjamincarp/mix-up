@@ -22,17 +22,17 @@ export async function fetchRecipes({ preview }: FetchRecipesOptions): Promise<En
 // A function to fetch a single cocktail by its slug.
 // Optionally uses the Contentful content preview.
 interface FetchSingleRecipeOptions {
-	slug: string
+	name: string
 	preview: boolean
 }
-export async function fetchSingleRecipe({ slug, preview }: FetchSingleRecipeOptions): Promise<Entry | null> {
+export async function fetchSingleRecipe({ name, preview }: FetchSingleRecipeOptions): Promise<Entry | null> {
 	const contentful = contentfulClient({ preview })
 
 	const recipesResult = await contentful.getEntries<TypeRecipeFields>({
 		content_type: 'recipe',
-		'sys.id': slug,
-		include: 2,
-	})
+		// @ts-ignore
+		'fields.name': name
+	});
 
 	return recipesResult.items[0];
 }
