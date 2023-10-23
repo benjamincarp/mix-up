@@ -2,6 +2,7 @@ import { TypeRecipeFields } from './types'
 import { Entry } from 'contentful'
 import { Document as RichTextDocument } from '@contentful/rich-text-types'
 import contentfulClient from './contentfulClient'
+import { TypeRecipeSkeleton } from './types/TypeRecipe'
 
 // A function to fetch all blog posts.
 // Optionally uses the Contentful content preview.
@@ -16,7 +17,7 @@ export interface Recipe {
 	tags: string[]
 }
 
-type RecipeEntry = Entry<TypeRecipeFields, undefined, string>
+type RecipeEntry = Entry<TypeRecipeSkeleton, undefined, string>
 
 function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 	return {
@@ -32,7 +33,7 @@ function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 export async function fetchRecipes({ preview }: FetchRecipesOptions): Promise<Recipe[]> {
 	const contentful = contentfulClient({ preview })
 
-	const blogPostsResult = await contentful.getEntries<TypeRecipeFields>({
+	const blogPostsResult = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe'
 	})
 
@@ -48,9 +49,8 @@ interface FetchSingleRecipeOptions {
 export async function fetchSingleRecipe({ name, preview }: FetchSingleRecipeOptions): Promise<Recipe | null> {
 	const contentful = contentfulClient({ preview })
 
-	const recipesResult = await contentful.getEntries<TypeRecipeFields>({
+	const recipesResult = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe',
-		// @ts-ignore
 		'fields.name': name
 	});
 

@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "types:contentful": "export $(cat .env.local | awk '!/^\\s*#/' | awk '!/^\\s*$/'); cf-content-types-generator --spaceId $CONTENTFUL_SPACE_ID --token $CONTENTFUL_MANAGEMENT_TOKEN -o contentful/types"
+    "lint": "next lint"
   },
   "dependencies": {
     "contentful": "^10.6.4",
@@ -20,7 +19,6 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
-    "cf-content-types-generator": "^2.12.9",
     "eslint": "^8",
     "eslint-config-next": "13.5.5",
     "postcss": "^8",

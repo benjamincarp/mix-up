@@ -1,13 +1,11 @@
-import type { Entry, EntryFields } from "contentful";
+import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode } from "contentful";
 
 export interface TypeRecipeFields {
-    contentTypeId: 'recipe',
-    fields: {
-        name: EntryFields.Text;
-        ingredients: EntryFields.Text[];
-        instructions?: EntryFields.RichText;
-        tags?: EntryFields.Text[];
-    }
+    name: EntryFieldTypes.Symbol;
+    ingredients: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
+    instructions?: EntryFieldTypes.RichText;
+    tags?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }
 
-export type TypeRecipe = Entry<TypeRecipeFields>;
+export type TypeRecipeSkeleton = EntrySkeletonType<TypeRecipeFields, "recipe">;
+export type TypeRecipe<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeRecipeSkeleton, Modifiers, Locales>;
