@@ -1,6 +1,7 @@
 import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 import { fetchSingleRecipe } from '../../../contentful/recipes'
+import RichText from '../../../contentful/RichText'
 
 interface RecepePageParams {
 	name: string
@@ -52,6 +53,9 @@ async function RecipePage({ params }: RecipePageProps) {
 					return (<li key={i}>{ingredient}</li>)
 				})}
 			</ul>
+			<div>
+				<RichText document={recipe.instructions} />
+			</div>
 		</main>
 	)
 }

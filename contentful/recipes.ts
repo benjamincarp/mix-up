@@ -1,4 +1,3 @@
-import { TypeRecipeFields } from './types'
 import { Entry } from 'contentful'
 import { Document as RichTextDocument } from '@contentful/rich-text-types'
 import contentfulClient from './contentfulClient'
@@ -51,7 +50,8 @@ export async function fetchSingleRecipe({ name, preview }: FetchSingleRecipeOpti
 
 	const recipesResult = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe',
-		'fields.name': name
+		'fields.name': name,
+		include: 2
 	});
 
 	return parseContentfulRecipe(recipesResult.items[0]);
