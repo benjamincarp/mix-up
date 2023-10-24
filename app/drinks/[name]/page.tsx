@@ -1,6 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
-import { fetchSingleRecipe } from '../../../contentful/recipes'
+import { fetchRecipes, fetchSingleRecipe } from '../../../contentful/recipes'
 import { draftMode } from 'next/headers'
 import RichText from '../../../contentful/RichText'
 
@@ -14,11 +14,11 @@ interface RecipePageProps {
 
 // Tell Next.js about all our blog posts so
 // they can be statically generated at build time.
-// export async function generateStaticParams(): Promise<RecepePageParams[]> {
-// 	const recipes = await fetchRecipes({ preview: false })
+export async function generateStaticParams(): Promise<RecepePageParams[]> {
+	const recipes = await fetchRecipes({ preview: false })
 
-// 	return recipes.map((recipe) => ({ slug: recipe.sys.id }))
-// }
+	return recipes.map((recipe) => ({ name: recipe.name }))
+}
 
 export async function generateMetadata({ params }: RecipePageProps, parent: ResolvingMetadata): Promise<Metadata> {
 	const recipe = await fetchSingleRecipe({ name: params.name, preview: draftMode().isEnabled })
