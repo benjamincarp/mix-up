@@ -1,6 +1,7 @@
 import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 import { fetchSingleRecipe } from '../../../contentful/recipes'
+import { draftMode } from 'next/headers'
 import RichText from '../../../contentful/RichText'
 
 interface RecepePageParams {
@@ -20,7 +21,7 @@ interface RecipePageProps {
 // }
 
 export async function generateMetadata({ params }: RecipePageProps, parent: ResolvingMetadata): Promise<Metadata> {
-	const recipe = await fetchSingleRecipe({ name: params.name, preview: false })
+	const recipe = await fetchSingleRecipe({ name: params.name, preview: draftMode().isEnabled })
 
 	if (!recipe) {
 		return notFound()
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: RecipePageProps, parent: Reso
 async function RecipePage({ params }: RecipePageProps) {
 	// Fetch a single blog post by slug,
 	// using the content preview if draft mode is enabled:
-	const recipe = await fetchSingleRecipe({ name: params.name, preview: false })
+	const recipe = await fetchSingleRecipe({ name: params.name, preview: draftMode().isEnabled })
 
 	if (!recipe) {
 		// If a blog post can't be found,
