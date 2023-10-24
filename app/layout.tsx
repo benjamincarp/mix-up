@@ -21,7 +21,7 @@ export default function RootLayout({
       <body className={inter.className}>
         {draftMode().isEnabled && (
             <p className="bg-orange-200 py-4 px-[6vw]">
-              Draft mode is on!
+              Draft mode is on! <ExitDraftModeLink className="underline" />
             </p>
           )}
         {children}
