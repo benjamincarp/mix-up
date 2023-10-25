@@ -45,7 +45,7 @@ async function RecipePage({ params }: RecipePageProps) {
 	}
 
 	return (
-		<main className="p-[6vw]">
+		<>
 			<h1>
 				{recipe.name?.toString()}
 			</h1>
@@ -57,7 +57,7 @@ async function RecipePage({ params }: RecipePageProps) {
 			<div>
 				<RichText document={recipe.instructions} />
 			</div>
-		</main>
+		</>
 	)
 }
 

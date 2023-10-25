@@ -16,7 +16,7 @@ export interface Recipe {
 	tags: string[]
 }
 
-type RecipeEntry = Entry<TypeRecipeSkeleton, undefined, string>
+type RecipeEntry = Entry<TypeRecipeSkeleton, undefined, string> 
 
 function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 	return {
@@ -32,11 +32,12 @@ function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 export async function fetchRecipes({ preview }: FetchRecipesOptions): Promise<Recipe[]> {
 	const contentful = contentfulClient({ preview })
 
-	const blogPostsResult = await contentful.getEntries<TypeRecipeSkeleton>({
+	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe'
 	})
 
-	return blogPostsResult.items.map(parseContentfulRecipe);
+	if (recipesResults.items.length < 1) return <Recipe[]>[];
+	return recipesResults.items.map(parseContentfulRecipe);
 }
 
 // A function to fetch a single cocktail by its slug.
@@ -48,13 +49,14 @@ interface FetchSingleRecipeOptions {
 export async function fetchSingleRecipe({ name, preview }: FetchSingleRecipeOptions): Promise<Recipe | null> {
 	const contentful = contentfulClient({ preview })
 
-	const recipesResult = await contentful.getEntries<TypeRecipeSkeleton>({
+	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe',
 		'fields.name': name,
 		include: 2
 	});
 
-	return parseContentfulRecipe(recipesResult.items[0]);
+	if (recipesResults.items.length < 1) return null;
+	return parseContentfulRecipe(recipesResults.items[0]);
 }
 
 
