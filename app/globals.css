@@ -23,3 +23,7 @@ svg {
   fill: var(--foreground-rgb);
   stroke: var(--foreground-rgb);
 }
+
+li {
+  list-style: inside;
+}

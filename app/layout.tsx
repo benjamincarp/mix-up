@@ -4,7 +4,7 @@ import './globals.css'
 import { draftMode } from 'next/headers'
 import ExitDraftModeLink from './components/ExitDraftModeLink'
 import Link from 'next/link'
-import GlassIcon from './components/glassIcon'
+import GlassIcon from './components/GlassIcon'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,7 +27,7 @@ export default function RootLayout({
             </p>
           )}
         {children}
-        <div className='flex flex-row justify-center mt-6'>
+        <div className='flex flex-row justify-center mt-3'>
           <Link href={"/"}>
             <GlassIcon />
           </Link>

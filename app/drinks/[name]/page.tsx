@@ -3,7 +3,9 @@ import { notFound } from 'next/navigation'
 import { fetchRecipes, fetchSingleRecipe } from '../../../contentful/recipes'
 import { draftMode } from 'next/headers'
 import RichText from '../../../contentful/RichText'
-import GlassIcon from '@/app/components/glassIcon'
+import ContentCard from '@/app/components/ContentCard'
+import Separator from '@/app/components/Separator'
+
 
 interface RecepePageParams {
 	name: string
@@ -47,25 +49,20 @@ async function RecipePage({ params }: RecipePageProps) {
 
 	return (
 		<main>
-			<div className='p-5'>
-				<h1 className='flex flex-row justify-center m-3 mb-6 text-3xl'>
-					<div className='p-1 border-2 border inline'>
-						<div className='p-2.5 border-2 border inline'>
-							{recipe.name?.toString()}
-						</div>
-					</div>
-				</h1>
-				<div className='p-6 border-2 border-double'>
-					<ul className='my-3'>
-						{recipe.ingredients.map((ingredient,i) => {
-							return (<li key={i}>{ingredient}</li>)
-						})}
-					</ul>
-					<div className='my-3'>
-						<RichText document={recipe.instructions} />
-					</div>
+			<ContentCard titleText={recipe.name}>
+				<span className='italic text-sm'>
+					Ingredients:
+				</span>
+				<ul className='mb-3 mt-1.5'>
+					{recipe.ingredients.map((ingredient,i) => {
+						return (<li key={i}>{ingredient}</li>)
+					})}
+				</ul>
+				<Separator />
+				<div className='mt-3'>
+					<RichText document={recipe.instructions} />
 				</div>
-			</div>
+			</ContentCard>
 		</main>
 	)
 }
