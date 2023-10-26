@@ -59,4 +59,21 @@ export async function fetchSingleRecipe({ name, preview }: FetchSingleRecipeOpti
 	return parseContentfulRecipe(recipesResults.items[0]);
 }
 
+// A function to fetch all recipes matching the passed tag.
+// Optionally uses the Contentful content preview.
+interface FetchTaggedRecipeOptions {
+	tag: string
+	preview: boolean
+}
+export async function fetchTaggedRecipes({ tag, preview }: FetchTaggedRecipeOptions): Promise<Recipe[]> {
+	const contentful = contentfulClient({ preview })
 
+	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
+		content_type: 'recipe',
+		'metadata.tags.sys.id[in]': [tag],
+		include: 2
+	});
+
+	if (recipesResults.items.length < 1) return <Recipe[]>[];
+	return recipesResults.items.map(parseContentfulRecipe);
+}
