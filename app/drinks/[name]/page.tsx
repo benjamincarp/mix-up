@@ -48,16 +48,22 @@ async function RecipePage({ params }: RecipePageProps) {
 	return (
 		<main>
 			<div className='p-5'>
-				<h1>
-					<span className='p-2.5 border-2 border-double'>{recipe.name?.toString()}</span>
+				<h1 className='flex flex-row justify-center m-3 mb-6 text-3xl'>
+					<div className='p-1 border-2 border inline'>
+						<div className='p-2.5 border-2 border inline'>
+							{recipe.name?.toString()}
+						</div>
+					</div>
 				</h1>
-				<ul className='mb-3 mt-5'>
-					{recipe.ingredients.map((ingredient,i) => {
-						return (<li key={i}>{ingredient}</li>)
-					})}
-				</ul>
-				<div>
-					<RichText document={recipe.instructions} />
+				<div className='p-6 border-2 border-double'>
+					<ul className='my-3'>
+						{recipe.ingredients.map((ingredient,i) => {
+							return (<li key={i}>{ingredient}</li>)
+						})}
+					</ul>
+					<div className='my-3'>
+						<RichText document={recipe.instructions} />
+					</div>
 				</div>
 			</div>
 		</main>

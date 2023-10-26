@@ -27,7 +27,7 @@ export default function RootLayout({
             </p>
           )}
         {children}
-        <div className='flex flex-row justify-center mt-16'>
+        <div className='flex flex-row justify-center mt-6'>
           <Link href={"/"}>
             <GlassIcon />
           </Link>
