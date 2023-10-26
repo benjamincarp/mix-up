@@ -2,7 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { draftMode } from 'next/headers'
-import ExitDraftModeLink from './ExitDraftModeLink'
+import ExitDraftModeLink from './components/ExitDraftModeLink'
+import Link from 'next/link'
+import GlassIcon from './components/glassIcon'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +27,11 @@ export default function RootLayout({
             </p>
           )}
         {children}
+        <div className='flex flex-row justify-center mt-16'>
+          <Link href={"/"}>
+            <GlassIcon />
+          </Link>
+        </div>
       </body>
     </html>
   )

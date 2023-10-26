@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { fetchRecipes, fetchSingleRecipe } from '../../../contentful/recipes'
 import { draftMode } from 'next/headers'
 import RichText from '../../../contentful/RichText'
+import GlassIcon from '@/app/components/glassIcon'
 
 interface RecepePageParams {
 	name: string
@@ -45,19 +46,21 @@ async function RecipePage({ params }: RecipePageProps) {
 	}
 
 	return (
-		<>
-			<h1>
-				{recipe.name?.toString()}
-			</h1>
-			<ul>
-				{recipe.ingredients.map((ingredient,i) => {
-					return (<li key={i}>{ingredient}</li>)
-				})}
-			</ul>
-			<div>
-				<RichText document={recipe.instructions} />
+		<main>
+			<div className='p-5'>
+				<h1>
+					<span className='p-2.5 border-2 border-double'>{recipe.name?.toString()}</span>
+				</h1>
+				<ul className='mb-3 mt-5'>
+					{recipe.ingredients.map((ingredient,i) => {
+						return (<li key={i}>{ingredient}</li>)
+					})}
+				</ul>
+				<div>
+					<RichText document={recipe.instructions} />
+				</div>
 			</div>
-		</>
+		</main>
 	)
 }
 
