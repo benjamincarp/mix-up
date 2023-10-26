@@ -30,7 +30,6 @@ export default function RootLayout({
         <div className='flex flex-row justify-center mt-3'>
           <Link href={"/"}>
             <Glass />
-            Home
           </Link>
         </div>
       </body>
