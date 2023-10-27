@@ -1,4 +1,4 @@
-import { Entry } from 'contentful'
+import { Entry, OrderFilterPaths } from 'contentful'
 import { Document as RichTextDocument } from '@contentful/rich-text-types'
 import contentfulClient from './contentfulClient'
 import { TypeRecipeSkeleton } from './types/TypeRecipe'
@@ -24,7 +24,7 @@ function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 		name: recipeEntry.fields.name,
 		ingredients: recipeEntry.fields.ingredients,
 		instructions: recipeEntry.fields.instructions? recipeEntry.fields.instructions : null,
-		tags: recipeEntry.fields.tags ? recipeEntry.fields.tags : []
+		tags: recipeEntry.metadata.tags ? recipeEntry.metadata.tags.map((tag)=>tag.sys.id) : []
 	}
 }
 
@@ -33,14 +33,15 @@ export async function fetchRecipes({ preview }: FetchRecipesOptions): Promise<Re
 	const contentful = contentfulClient({ preview })
 
 	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
-		content_type: 'recipe'
+		content_type: 'recipe',
+		order: ['fields.name']
 	})
 
 	if (recipesResults.items.length < 1) return <Recipe[]>[];
 	return recipesResults.items.map(parseContentfulRecipe);
 }
 
-// A function to fetch a single cocktail by its slug.
+// A function to fetch a single cocktail by its name.
 // Optionally uses the Contentful content preview.
 interface FetchSingleRecipeOptions {
 	name: string
@@ -51,8 +52,7 @@ export async function fetchSingleRecipe({ name, preview }: FetchSingleRecipeOpti
 
 	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe',
-		'fields.name': name,
-		include: 2
+		'fields.name': name
 	});
 
 	if (recipesResults.items.length < 1) return null;
@@ -71,7 +71,7 @@ export async function fetchTaggedRecipes({ tag, preview }: FetchTaggedRecipeOpti
 	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe',
 		'metadata.tags.sys.id[in]': [tag],
-		include: 2
+		order: ['fields.name']
 	});
 
 	if (recipesResults.items.length < 1) return <Recipe[]>[];

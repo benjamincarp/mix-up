@@ -4,7 +4,6 @@ export interface TypeRecipeFields {
     name: EntryFieldTypes.Symbol;
     ingredients: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
     instructions?: EntryFieldTypes.RichText;
-    tags?: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
 }
 
 export type TypeRecipeSkeleton = EntrySkeletonType<TypeRecipeFields, "recipe">;

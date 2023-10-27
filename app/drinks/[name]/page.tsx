@@ -5,6 +5,7 @@ import { draftMode } from 'next/headers'
 import RichText from '../../../contentful/RichText'
 import ContentCard from '@/app/components/ContentCard'
 import Separator from '@/app/components/Separator'
+import Link from 'next/link'
 
 
 interface RecepePageParams {
@@ -47,20 +48,35 @@ async function RecipePage({ params }: RecipePageProps) {
 		return notFound()
 	}
 
+	console.log("tags");
+	console.log(recipe.tags)
 	return (
 		<main>
 			<ContentCard titleText={recipe.name}>
 				<span className='italic text-sm'>
 					Ingredients:
 				</span>
-				<ul className='mb-3 mt-1.5'>
+				<ul className='mt-1.5'>
 					{recipe.ingredients.map((ingredient,i) => {
 						return (<li key={i}>{ingredient}</li>)
 					})}
 				</ul>
 				<Separator />
-				<div className='mt-3'>
+				<div>
 					<RichText document={recipe.instructions} />
+				</div>
+				<Separator />
+				<div className='flex flex-row'>
+					<div className='italic text-sm flex-shrink'>
+						Explore more like this...
+					</div>
+					<div className='flex flex-grow flex-wrap content-end justify-end'>
+						{recipe.tags.map((tag, index)=>(
+							<span key={tag} className=''>
+								<Link href={`/tag/${tag}`} className='underline px-1 inline'>{tag}</Link>
+							</span>
+						))}
+					</div>
 				</div>
 			</ContentCard>
 		</main>
