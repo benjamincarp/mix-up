@@ -2,7 +2,9 @@ import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleC
 
 export interface TypeRecipeFields {
     name: EntryFieldTypes.Symbol;
+    description?: EntryFieldTypes.Symbol;
     ingredients: EntryFieldTypes.Array<EntryFieldTypes.Symbol>;
+    garnish?: EntryFieldTypes.Symbol;
     instructions?: EntryFieldTypes.RichText;
 }
 

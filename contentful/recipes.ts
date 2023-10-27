@@ -11,7 +11,9 @@ interface FetchRecipesOptions {
 export interface Recipe {
 	id: string,
 	name: string,
+	description: string | undefined,
 	ingredients: string[],
+	garnish: string | undefined,
 	instructions: RichTextDocument | null,
 	tags: string[]
 }
@@ -22,7 +24,9 @@ function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 	return {
 		id: recipeEntry.sys.id,
 		name: recipeEntry.fields.name,
+		description: recipeEntry.fields.description,
 		ingredients: recipeEntry.fields.ingredients,
+		garnish: recipeEntry.fields.garnish,
 		instructions: recipeEntry.fields.instructions? recipeEntry.fields.instructions : null,
 		tags: recipeEntry.metadata.tags ? recipeEntry.metadata.tags.map((tag)=>tag.sys.id) : []
 	}
