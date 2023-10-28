@@ -11,6 +11,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'MixUp',
   description: 'Cocktails Curated',
+  manifest: '/manifest.webmanifest'
 }
 
 export default function RootLayout({
