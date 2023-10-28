@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import ContentCard from './components/ContentCard'
+import ContentCard from '../components/ContentCard'
  
 export default function NotFound() {
   return (

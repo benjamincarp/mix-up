@@ -2,7 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 import { fetchTaggedRecipes } from '../../../contentful/recipes'
 import { draftMode } from 'next/headers'
-import RecipeList from '@/app/components/RecipeList'
+import RecipeList from '@/components/RecipeList'
 
 interface TagPageParams {
 	tag: string

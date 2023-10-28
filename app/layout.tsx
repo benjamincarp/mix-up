@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { draftMode } from 'next/headers'
-import ExitDraftModeLink from './components/ExitDraftModeLink'
+import ExitDraftModeLink from '../components/ExitDraftModeLink'
 import Link from 'next/link'
-import Glass from './components/Glass'
+import Glass from '../components/Glass'
 
 const inter = Inter({ subsets: ['latin'] })
 

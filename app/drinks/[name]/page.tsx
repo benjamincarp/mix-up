@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation'
 import { fetchRecipes, fetchSingleRecipe } from '../../../contentful/recipes'
 import { draftMode } from 'next/headers'
 import RichText from '../../../contentful/RichText'
-import ContentCard from '@/app/components/ContentCard'
-import Separator from '@/app/components/Separator'
+import ContentCard from '@/components/ContentCard'
+import Separator from '@/components/Separator'
 import Link from 'next/link'
 
 
@@ -47,7 +47,7 @@ async function RecipePage({ params }: RecipePageProps) {
 		// tell Next.js to render a 404 page.
 		return notFound()
 	}
-	
+
 	return (
 		<main>
 			<ContentCard titleText={recipe.name}>
