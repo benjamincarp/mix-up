@@ -2,9 +2,7 @@ import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
 import { fetchTaggedRecipes } from '../../../contentful/recipes'
 import { draftMode } from 'next/headers'
-import ContentCard from '@/app/components/ContentCard'
-import Link from 'next/link'
-
+import RecipeList from '@/app/components/RecipeList'
 
 interface TagPageParams {
 	tag: string
@@ -15,9 +13,7 @@ interface TagPageProps {
 }
 
 export async function generateMetadata({ params }: TagPageProps, parent: ResolvingMetadata): Promise<Metadata> {
-	return {
-		title: `${params.tag?.toString()} List`.toUpperCase()
-}
+	return {title: `${params.tag?.toString()} List`.toUpperCase()}
 }
 
 // The actual TagPage component.
@@ -27,18 +23,7 @@ async function TagPage({ params }: TagPageProps) {
   if (recipeList.length < 1) {return notFound()}
 
   return (
-    <ContentCard titleText={params.tag}>
-      {recipeList.map((recipe) => {
-        const name = recipe.name.toString();
-        return (
-          <div key={name}>
-            <Link href={`/drinks/${name}`} className='underline'>
-              {name}
-            </Link>
-          </div>
-        )
-      })}
-    </ContentCard>  
+    <RecipeList title={params.tag} recipeList={recipeList} /> 
   )
 }
 

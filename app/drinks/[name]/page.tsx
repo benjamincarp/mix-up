@@ -47,9 +47,7 @@ async function RecipePage({ params }: RecipePageProps) {
 		// tell Next.js to render a 404 page.
 		return notFound()
 	}
-
-	console.log("tags");
-	console.log(recipe.tags)
+	
 	return (
 		<main>
 			<ContentCard titleText={recipe.name}>
