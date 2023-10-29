@@ -5,5 +5,5 @@ import RecipeList from "../components/RecipeList";
 export default async function Home() {
   const recipeList = await fetchRecipes({ preview: draftMode().isEnabled });
 
-  return <RecipeList title="House Specials" recipeList={recipeList} />;
+  return <RecipeList title="House Specialties" recipeList={recipeList} />;
 }
