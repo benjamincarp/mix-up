@@ -25,7 +25,7 @@ export async function generateStaticParams(): Promise<RecepePageParams[]> {
 }
 
 export async function generateMetadata({ params }: RecipePageProps, parent: ResolvingMetadata): Promise<Metadata> {
-	const recipe = await fetchSingleRecipe({ name: params.name, preview: draftMode().isEnabled })
+	const recipe = await fetchSingleRecipe({ name: decodeURIComponent(params.name), preview: draftMode().isEnabled })
 
 	if (!recipe) {
 		return notFound()
@@ -38,19 +38,16 @@ export async function generateMetadata({ params }: RecipePageProps, parent: Reso
 
 // The actual RecipePage component.
 async function RecipePage({ params }: RecipePageProps) {
-	// Fetch a single blog post by slug,
-	// using the content preview if draft mode is enabled:
-	const recipe = await fetchSingleRecipe({ name: params.name, preview: draftMode().isEnabled })
+	const name = decodeURIComponent(params.name)
+	const recipe = await fetchSingleRecipe({ name: name, preview: draftMode().isEnabled })
 
 	if (!recipe) {
-		// If a blog post can't be found,
-		// tell Next.js to render a 404 page.
 		return notFound()
 	}
 
 	return (
 		<main>
-			<ContentCard titleText={recipe.name}>
+			<ContentCard titleText={name}>
 				<span className='italic text-sm'>
 					Ingredients:
 				</span>
@@ -59,25 +56,51 @@ async function RecipePage({ params }: RecipePageProps) {
 						return (<li key={i}>{ingredient}</li>)
 					})}
 				</ul>
+				{parseGarnish(recipe.garnish)}
 				<Separator />
 				<div>
 					<RichText document={recipe.instructions} />
 				</div>
-				<Separator />
-				<div className='flex flex-row'>
-					<div className='italic text-sm flex-shrink'>
-						Explore more like this...
-					</div>
-					<div className='flex flex-grow flex-wrap content-end justify-end'>
-						{recipe.tags.map((tag, index)=>(
-							<span key={tag} className=''>
-								<Link href={`/tag/${tag}`} className='underline px-1 inline'>{tag}</Link>
-							</span>
-						))}
-					</div>
-				</div>
+				{parseTags(recipe.tags)}
 			</ContentCard>
 		</main>
+	)
+}
+
+function parseGarnish(garnish? :string) {
+	if (!garnish) return null;
+
+	return (
+		<div className='pt-3'>
+			<div className='italic text-sm'>
+				Garnish:
+			</div>
+			<div className='mt-1.5 pl-6'>
+				{garnish}
+			</div>
+		</div>
+	)
+}
+
+function parseTags(tags? :string[]){
+	if (!tags?.length || tags.length<1) return null;
+
+	return (
+		<>
+			<Separator />
+			<div className='flex flex-row'>
+				<div className='italic text-sm flex-shrink'>
+					Explore more like this:
+				</div>
+				<div className='flex flex-grow flex-wrap content-end justify-end'>
+					{tags.map((tag)=>(
+						<span key={tag} className=''>
+							<Link href={`/tag/${encodeURIComponent(tag)}`} className='underline px-1 inline'>{tag}</Link>
+						</span>
+					))}
+				</div>
+			</div>
+		</>
 	)
 }
 

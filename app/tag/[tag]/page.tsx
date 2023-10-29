@@ -13,12 +13,13 @@ interface TagPageProps {
 }
 
 export async function generateMetadata({ params }: TagPageProps, parent: ResolvingMetadata): Promise<Metadata> {
-	return {title: `${params.tag?.toString()} List`.toUpperCase()}
+	return {title: `${decodeURIComponent(params.tag?.toString())} List`.toUpperCase()}
 }
 
 // The actual TagPage component.
 async function TagPage({ params }: TagPageProps) {
-	const recipeList = await fetchTaggedRecipes({ preview: draftMode().isEnabled, tag: params.tag.toLowerCase() });
+  const tag = decodeURIComponent(params.tag)
+	const recipeList = await fetchTaggedRecipes({ preview: draftMode().isEnabled, tag: tag });
 
   if (recipeList.length < 1) {return notFound()}
 

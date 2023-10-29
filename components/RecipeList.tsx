@@ -16,7 +16,7 @@ export default function RecipeList ({title, recipeList} :HeaderParams){
                 return (
                     <div key={name}>
                         {(index>0)? <Separator/> : null}
-                        <Link href={`drinks/${name}`} >
+                        <Link href={`/drinks/${name}`} >
                         <div className='text-center'>
                             <div className='underline'>
                             {name.toUpperCase()}
