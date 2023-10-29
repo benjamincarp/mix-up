@@ -1,6 +1,5 @@
 import {Recipe} from "../contentful/recipes"
 import Link from 'next/link'
-import Separator from './Separator'
 import ContentCard from './ContentCard';
 
 interface HeaderParams {
