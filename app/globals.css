@@ -19,11 +19,11 @@ body {
   background: var(--background-rgb);
 }
 
-div { 
+div {
   border-color: var(--foreground-rgb);
 }
 
-hr { 
+hr {
   border-color: var(--foreground-rgb);
 }
 
