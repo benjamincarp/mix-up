@@ -6,6 +6,6 @@ export default async function Home() {
   const recipeList = await fetchRecipes({ preview: draftMode().isEnabled });
 
   return (
-    <RecipeList title='House Specialties' recipeList={recipeList} />
+    <RecipeList title='House Specials' recipeList={recipeList} />
   )
 }
