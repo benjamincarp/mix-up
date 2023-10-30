@@ -1,22 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Overview
+
+This is app was created during Bottle Rocket's annual Rocket Science hackathon. I chose to spend my 2 days knocking off my rusty coding skills getting hands on with tools our web team has adopted since my shift to focusing on management. 
+
+The project uses [Next.js](https://nextjs.org/) bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) and hosted/deployed via Vercel. Content is served form Contentful CMS and styling is done via Tailwind.
 
 ## Getting Started
+First, install the neccessary packages:
 
-First, run the development server:
+```bash
+npm install
+```
+
+then, run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
