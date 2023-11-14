@@ -7,7 +7,7 @@ interface GlassIconProps {
 	params?: GlassIconParams
 }
 
-export default function Glass ({params}: GlassIconProps){
+export default function GlassIcon ({params}: GlassIconProps){
     const width = (params?.width) ? params.width : 35
     const height = (params?.height) ? params.height : 35
 

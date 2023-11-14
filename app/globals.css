@@ -14,6 +14,11 @@
   }
 }
 
+.invert-colors {
+  color: var(--background-rgb);
+  background: var(--foreground-rgb);
+}
+
 body {
   color: var(--foreground-rgb);
   background: var(--background-rgb);
@@ -26,10 +31,23 @@ div {
 hr {
   border-color: var(--foreground-rgb);
 }
+.invert-colors hr{
+  border-color: var(--background-rgb);
+}
+
+.invert-colors div{
+  border-color: var(--background-rgb);
+}
 
 svg {
+  display: inline;
   fill: var(--foreground-rgb);
   stroke: var(--foreground-rgb);
+}
+
+.invert-colors svg {
+  fill: var(--background-rgb);
+  stroke: var(--background-rgb);
 }
 
 li {

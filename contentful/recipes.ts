@@ -6,7 +6,14 @@ import { TypeRecipeSkeleton } from './types/TypeRecipe'
 // A function to fetch all blog posts.
 // Optionally uses the Contentful content preview.
 interface FetchRecipesOptions {
-	preview: boolean
+	preview: boolean,
+	order: recipeSort | undefined
+}
+
+export enum recipeSort{
+	'name' = 'fields.name',
+	'newest' = '-sys.createdAt',
+	'oldest' = 'sys.createdAt'
 }
 export interface Recipe {
 	id: string,
@@ -33,12 +40,14 @@ function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 }
 
 
-export async function fetchRecipes({ preview }: FetchRecipesOptions): Promise<Recipe[]> {
+export async function fetchRecipes({ preview, order }: FetchRecipesOptions): Promise<Recipe[]> {
 	const contentful = contentfulClient({ preview })
+
+	const sortOrder = order || recipeSort.name
 
 	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe',
-		order: ['fields.name']
+		order: [sortOrder]
 	})
 
 	if (recipesResults.items.length < 1) return <Recipe[]>[];
