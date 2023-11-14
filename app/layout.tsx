@@ -20,14 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body>
         {draftMode().isEnabled && (
             <p className="bg-orange-200 py-4 px-[6vw]">
               Draft mode is currently on! <ExitDraftModeLink className="underline" />
             </p>
           )}
         {children}
-        <div className='flex flex-row justify-center mt-3'>
+        <div className='flex flex-row justify-center mt-3 mb-6'>
           <Link href={"/"}>
             <Glass />
           </Link>
