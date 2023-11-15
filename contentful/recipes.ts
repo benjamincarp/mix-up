@@ -1,13 +1,13 @@
-import { Entry, OrderFilterPaths } from 'contentful'
+import { Entry, OrderFilterPaths, UnresolvedLink } from 'contentful'
 import { Document as RichTextDocument } from '@contentful/rich-text-types'
 import contentfulClient from './contentfulClient'
-import { TypeRecipeSkeleton } from './types/Types'
+import { TypeCategorySkeleton, TypeRecipeSkeleton } from './types/Types'
 
 // A function to fetch all blog posts.
 // Optionally uses the Contentful content preview.
 interface FetchRecipesOptions {
 	preview: boolean,
-	order: recipeSort | undefined
+	order: recipeSort
 }
 
 export enum recipeSort{
@@ -42,12 +42,9 @@ function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 
 export async function fetchRecipes({ preview, order }: FetchRecipesOptions): Promise<Recipe[]> {
 	const contentful = contentfulClient({ preview })
-
-	const sortOrder = order || recipeSort.name
-
 	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe',
-		order: [sortOrder]
+		order: [order]
 	})
 
 	if (recipesResults.items.length < 1) return <Recipe[]>[];
@@ -89,4 +86,33 @@ export async function fetchTaggedRecipes({ tag, preview }: FetchTaggedRecipeOpti
 
 	if (recipesResults.items.length < 1) return <Recipe[]>[];
 	return recipesResults.items.map(parseContentfulRecipe);
+}
+
+export interface Category {
+	id: string,
+	name: string,
+	drinks: Recipe[]
+}
+
+type CategoryEntry = Entry<TypeCategorySkeleton, undefined, string> 
+
+function parseContentfulCategory(catEntry: CategoryEntry): Category{
+	const drinks = catEntry.fields.drinks
+
+	return {
+		id: catEntry.sys.id,
+		name: catEntry.fields.name,
+		drinks: drinks && drinks.length ? drinks.map(drink => drink as RecipeEntry).map(parseContentfulRecipe) : <Recipe[]>[]
+	}
+}
+export async function fetchCatagories(): Promise<Category[]> {
+	const contentful = contentfulClient({preview: false})
+
+
+	const catResults = await contentful.getEntries<TypeCategorySkeleton>({
+		content_type: 'category'
+	})
+
+	if (catResults.items.length < 1) return <Category[]>[];
+	return catResults.items.map(parseContentfulCategory);
 }
