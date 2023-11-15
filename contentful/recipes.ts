@@ -1,7 +1,7 @@
 import { Entry, OrderFilterPaths, UnresolvedLink } from 'contentful'
 import { Document as RichTextDocument } from '@contentful/rich-text-types'
 import contentfulClient from './contentfulClient'
-import { TypeCategorySkeleton, TypeRecipeSkeleton } from './types/Types'
+import { TypeSectionSkeleton, TypeRecipeSkeleton } from './types/Types'
 
 // A function to fetch all blog posts.
 // Optionally uses the Contentful content preview.
@@ -25,9 +25,9 @@ export interface Recipe {
 	tags: string[]
 }
 
-type RecipeEntry = Entry<TypeRecipeSkeleton, undefined, string> 
+export type RecipeEntry = Entry<TypeRecipeSkeleton, undefined, string> 
 
-function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
+export function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
 	return {
 		id: recipeEntry.sys.id,
 		name: recipeEntry.fields.name,
@@ -88,31 +88,3 @@ export async function fetchTaggedRecipes({ tag, preview }: FetchTaggedRecipeOpti
 	return recipesResults.items.map(parseContentfulRecipe);
 }
 
-export interface Category {
-	id: string,
-	name: string,
-	drinks: Recipe[]
-}
-
-type CategoryEntry = Entry<TypeCategorySkeleton, undefined, string> 
-
-function parseContentfulCategory(catEntry: CategoryEntry): Category{
-	const drinks = catEntry.fields.drinks
-
-	return {
-		id: catEntry.sys.id,
-		name: catEntry.fields.name,
-		drinks: drinks && drinks.length ? drinks.map(drink => drink as RecipeEntry).map(parseContentfulRecipe) : <Recipe[]>[]
-	}
-}
-export async function fetchCatagories(): Promise<Category[]> {
-	const contentful = contentfulClient({preview: false})
-
-
-	const catResults = await contentful.getEntries<TypeCategorySkeleton>({
-		content_type: 'category'
-	})
-
-	if (catResults.items.length < 1) return <Category[]>[];
-	return catResults.items.map(parseContentfulCategory);
-}

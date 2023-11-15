@@ -1,12 +1,13 @@
 import type { ChainModifiers, Entry, EntryFieldTypes, EntrySkeletonType, LocaleCode } from "contentful";
 
-export interface TypeCategoryFields {
+export interface TypeMenuFields {
     name: EntryFieldTypes.Symbol;
-    drinks?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeRecipeSkeleton>>;
+    active?: EntryFieldTypes.Boolean;
+    sections: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeSectionSkeleton>>;
 }
 
-export type TypeCategorySkeleton = EntrySkeletonType<TypeCategoryFields, "category">;
-export type TypeCategory<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeCategorySkeleton, Modifiers, Locales>;
+export type TypeMenuSkeleton = EntrySkeletonType<TypeMenuFields, "menu">;
+export type TypeMenu<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeMenuSkeleton, Modifiers, Locales>;
 
 export interface TypeRecipeFields {
     name: EntryFieldTypes.Symbol;
@@ -18,3 +19,11 @@ export interface TypeRecipeFields {
 
 export type TypeRecipeSkeleton = EntrySkeletonType<TypeRecipeFields, "recipe">;
 export type TypeRecipe<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeRecipeSkeleton, Modifiers, Locales>;
+
+export interface TypeSectionFields {
+    name: EntryFieldTypes.Symbol;
+    drinks?: EntryFieldTypes.Array<EntryFieldTypes.EntryLink<TypeRecipeSkeleton>>;
+}
+
+export type TypeSectionSkeleton = EntrySkeletonType<TypeSectionFields, "section">;
+export type TypeSection<Modifiers extends ChainModifiers, Locales extends LocaleCode> = Entry<TypeSectionSkeleton, Modifiers, Locales>;

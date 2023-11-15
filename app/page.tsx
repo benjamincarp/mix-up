@@ -1,11 +1,11 @@
 import { draftMode } from "next/headers";
-import { Category, fetchCatagories, fetchRecipes, recipeSort } from "../contentful/recipes";
+import { Section, fetchSections } from "../contentful/menu";
 import RecipeList from "../components/RecipeList";
 
 export default async function Home() {
-  const catList = await fetchCatagories();
+  const catList = await fetchSections();
   console.log('Categories')
   console.dir(catList)
 
-  return catList.map((category:Category) => (<RecipeList key={category.id} title={category.name} recipeList={category.drinks} />))
+  return catList.map((section:Section) => (<RecipeList key={section.id} title={section.name} recipeList={section.drinks} />))
 }
