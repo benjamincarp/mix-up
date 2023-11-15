@@ -1,1 +1,1 @@
-export type { TypeRecipe, TypeRecipeFields } from "./TypeRecipe";
+export type { TypeRecipe, TypeRecipeFields } from "./Types";

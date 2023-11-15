@@ -1,6 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next'
 import { notFound } from 'next/navigation'
-import { fetchRecipes, fetchSingleRecipe } from '../../../contentful/recipes'
+import { fetchRecipes, fetchSingleRecipe, recipeSort } from '../../../contentful/recipes'
 import { draftMode } from 'next/headers'
 import RichText from '../../../contentful/RichText'
 import ContentCard from '@/components/ContentCard'
@@ -19,7 +19,7 @@ interface RecipePageProps {
 // Tell Next.js about all our blog posts so
 // they can be statically generated at build time.
 export async function generateStaticParams(): Promise<RecepePageParams[]> {
-	const recipes = await fetchRecipes({ preview: false })
+	const recipes = await fetchRecipes({ preview: false, order: recipeSort.name })
 
 	return recipes.map((recipe) => ({ name: recipe.name }))
 }

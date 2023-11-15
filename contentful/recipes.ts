@@ -1,7 +1,7 @@
 import { Entry, OrderFilterPaths } from 'contentful'
 import { Document as RichTextDocument } from '@contentful/rich-text-types'
 import contentfulClient from './contentfulClient'
-import { TypeRecipeSkeleton } from './types/TypeRecipe'
+import { TypeRecipeSkeleton } from './types/Types'
 
 // A function to fetch all blog posts.
 // Optionally uses the Contentful content preview.
