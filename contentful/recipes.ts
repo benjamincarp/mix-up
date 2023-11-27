@@ -2,6 +2,7 @@ import { Entry, OrderFilterPaths, UnresolvedLink } from 'contentful'
 import { Document as RichTextDocument } from '@contentful/rich-text-types'
 import contentfulClient from './contentfulClient'
 import { TypeSectionSkeleton, TypeRecipeSkeleton } from './types/Types'
+import { metadata } from '@/app/layout'
 
 // A function to fetch all blog posts.
 // Optionally uses the Contentful content preview.
@@ -28,6 +29,7 @@ export interface Recipe {
 export type RecipeEntry = Entry<TypeRecipeSkeleton, undefined, string> 
 
 export function parseContentfulRecipe(recipeEntry: RecipeEntry): Recipe{
+
 	return {
 		id: recipeEntry.sys.id,
 		name: recipeEntry.fields.name,
@@ -62,7 +64,8 @@ export async function fetchSingleRecipe({ name, preview }: FetchSingleRecipeOpti
 
 	const recipesResults = await contentful.getEntries<TypeRecipeSkeleton>({
 		content_type: 'recipe',
-		'fields.name': name
+		'fields.name': name,
+        include: 2
 	});
 
 	if (recipesResults.items.length < 1) return null;
@@ -87,4 +90,6 @@ export async function fetchTaggedRecipes({ tag, preview }: FetchTaggedRecipeOpti
 	if (recipesResults.items.length < 1) return <Recipe[]>[];
 	return recipesResults.items.map(parseContentfulRecipe);
 }
+
+
 

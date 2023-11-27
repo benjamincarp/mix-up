@@ -6,6 +6,7 @@ import RichText from '../../../contentful/RichText'
 import ContentCard from '@/components/ContentCard'
 import Separator from '@/components/Separator'
 import Link from 'next/link'
+import { getTagName } from '@/contentful/tags'
 
 
 interface RecepePageParams {
@@ -16,7 +17,7 @@ interface RecipePageProps {
 	params: RecepePageParams
 }
 
-// Tell Next.js about all our blog posts so
+// Tell Next.js about all our drink pages so
 // they can be statically generated at build time.
 export async function generateStaticParams(): Promise<RecepePageParams[]> {
 	const recipes = await fetchRecipes({ preview: false, order: recipeSort.name })
@@ -61,7 +62,7 @@ async function RecipePage({ params }: RecipePageProps) {
 				<div>
 					<RichText document={recipe.instructions} />
 				</div>
-				{parseTags(recipe.tags)}
+				{ await parseTags(recipe.tags)}
 			</ContentCard>
 		</main>
 	)
@@ -82,8 +83,20 @@ function parseGarnish(garnish? :string) {
 	)
 }
 
-function parseTags(tags? :string[]){
+async function parseTags(tags? :string[]){
 	if (!tags?.length || tags.length<1) return null;
+
+	const tagLinks = tags.map(async (tag)=>{
+		let name = await getTagName(tag)
+		
+		console.log(`tag name ${name}`)
+		console.log(`tag id ${tag}`)
+
+		return (<span key={tag} className=''>
+				<Link href={`/tag/${encodeURIComponent(tag)}`} className='underline px-1 inline'>{name}</Link>
+			</span>)
+	})
+
 
 	return (
 		<>
@@ -93,11 +106,7 @@ function parseTags(tags? :string[]){
 					Explore more like this:
 				</div>
 				<div className='flex flex-grow flex-wrap content-end justify-end'>
-					{tags.map((tag)=>(
-						<span key={tag} className=''>
-							<Link href={`/tag/${encodeURIComponent(tag)}`} className='underline px-1 inline'>{tag}</Link>
-						</span>
-					))}
+					{tagLinks}
 				</div>
 			</div>
 		</>
