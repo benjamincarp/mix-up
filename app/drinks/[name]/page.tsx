@@ -14,7 +14,7 @@ interface RecepePageParams {
 }
 
 interface RecipePageProps {
-	params: RecepePageParams
+	params: Promise<RecepePageParams>
 }
 
 // Tell Next.js about all our drink pages so
@@ -26,7 +26,7 @@ export async function generateStaticParams(): Promise<RecepePageParams[]> {
 }
 
 export async function generateMetadata({ params }: RecipePageProps, parent: ResolvingMetadata): Promise<Metadata> {
-	const recipe = await fetchSingleRecipe({ name: decodeURIComponent(params.name), preview: draftMode().isEnabled })
+	const recipe = await fetchSingleRecipe({ name: decodeURIComponent((await params).name), preview: (await draftMode()).isEnabled })
 
 	if (!recipe) {
 		return notFound()
@@ -39,8 +39,8 @@ export async function generateMetadata({ params }: RecipePageProps, parent: Reso
 
 // The actual RecipePage component.
 async function RecipePage({ params }: RecipePageProps) {
-	const name = decodeURIComponent(params.name)
-	const recipe = await fetchSingleRecipe({ name: name, preview: draftMode().isEnabled })
+	const name = decodeURIComponent( (await params).name)
+	const recipe = await fetchSingleRecipe({ name: name, preview: (await draftMode()).isEnabled })
 
 	if (!recipe) {
 		return notFound()

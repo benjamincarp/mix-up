@@ -14,15 +14,16 @@ export const metadata: Metadata = {
   description: 'Cocktails Curated'
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const isDraft = (await draftMode()).isEnabled
   return (
     <html lang="en">
       <body>  
-        {draftMode().isEnabled && (
+        {isDraft && (
             <p className="bg-orange-200 py-4 px-[6vw]">
               Draft mode is currently on! <ExitDraftModeLink className="underline" />
             </p>

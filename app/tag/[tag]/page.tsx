@@ -10,7 +10,7 @@ interface TagPageParams {
 }
 
 interface TagPageProps {
-	params: TagPageParams
+	params: Promise <TagPageParams>
 }
 
 // Tell Next.js about all our blog posts so
@@ -22,17 +22,17 @@ export async function generateStaticParams(): Promise<TagPageParams[]> {
 }
 
 export async function generateMetadata({ params }: TagPageProps, parent: ResolvingMetadata): Promise<Metadata> {
-	let tagName =await getTagName(params.tag)
+	let tagName =await getTagName((await params).tag)
   return {title: `${tagName} List`}
 }
 
 // The actual TagPage component.
 async function TagPage({ params }: TagPageProps) {
-  const tag = decodeURIComponent(params.tag)
-	const recipeList = await fetchTaggedRecipes({ preview: draftMode().isEnabled, tag: tag });
+  const tag = decodeURIComponent((await params).tag)
+	const recipeList = await fetchTaggedRecipes({ preview: (await draftMode()).isEnabled, tag: tag });
 
   if (recipeList.length < 1) {return notFound()}
-  let tagName =await getTagName(params.tag)
+  let tagName =await getTagName((await params).tag)
 
   return (
     <RecipeList title={tagName} recipeList={recipeList} /> 
